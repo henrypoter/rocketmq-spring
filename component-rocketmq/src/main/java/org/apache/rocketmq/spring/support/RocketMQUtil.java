@@ -39,6 +39,10 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Objects;
@@ -253,5 +257,33 @@ public class RocketMQUtil {
             .append(separator).append(identify)
             .append(separator).append(UtilAll.getPid());
         return instanceName.toString();
+    }
+
+    /**
+     * 以追加的方式向文件中写入data
+     *
+     * @param filePath
+     * @param data
+     *            需要写入文件的数据
+     */
+    public static void appendLineToFile(String filePath, String data) {
+        try {
+            String newline = System.getProperty("line.separator");
+            File file = new File(filePath);
+
+            // if file doesnt exists, then create it
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            // true = append file
+            FileWriter fw = new FileWriter(file, true);
+            BufferedWriter bufferWritter = new BufferedWriter(fw);
+            bufferWritter.write(data);
+            bufferWritter.write(newline);
+            bufferWritter.close();
+        } catch (IOException e) {
+            throw new RuntimeException("向文件" + filePath + "写入内容时出错。");
+        }
     }
 }
