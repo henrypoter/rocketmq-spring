@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- 配置自动扫描的包 -->
+	<context:component-scan
+		base-package="com.study,org.apache.rocketmq.spring"></context:component-scan>
+
+    <!-- 引入属性文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties" />
+   <!-- <bean id="rocketMQTemplate" class="org.apache.rocketmq.spring.core.RocketMQTemplate" >
+        <property name="producer" ref="defaultMQProducer"></property>
+    </bean>
+    <bean id="defaultMQProducer" class="org.apache.rocketmq.client.producer.DefaultMQProducer">
+        <property name="namesrvAddr" value="192.168.11.180:9876"></property>
+        <property name="producerGroup" value="my-producer-group"></property>
+    </bean>
+-->
+<!--
+
+     <bean id="defaultRocketMQListenerContainer" class="org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer">
+         <property name="nameServer" value="192.168.11.180:9876"></property>
+         <property name="consumerGroup" value="just-a-cus-second"></property>
+         <property name="rocketMQListener" ref="mySecondBizConsumer"></property>
+         <property name="topic" value="string-topic"></property>
+     </bean>
+     <bean id="testCustomNameServerListener" class="com.study.listener.TestCustomNameServerListener">
+     </bean>
+     <bean id="mySecondBizConsumer" class="com.study.listener.MySecondBizConsumer"></bean>
+-->
+
+   <!-- <bean id="consumer" class="org.apache.rocketmq.client.consumer.DefaultMQPushConsumer">
+        <property name="namesrvAddr" value="192.168.11.180:9876"></property>
+        <property name="consumerGroup" value="just-a-cus"></property>
+    </bean>-->
+
+	<!-- 数据源 org.apache.commons.dbcp.BasicDataSource com.alibaba.druid.pool.DruidDataSource -->
+	<!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+
+		<property name="driverClassName" value="${jdbc_driver}" />
+		<property name="url" value="${jdbc_url}" />
+		<property name="username" value="${jdbc_user}" />
+		<property name="password" value="${jdbc_password}" />
+	</bean>
+-->
+
+	<!-- 支持事务注解 @Transactional -->
+	<tx:annotation-driven />
+
+	<!-- 对于mvc没有映射过的请求，交给容器默认handler来处理，例如：js,css等静态资源 -->
+	<mvc:default-servlet-handler />
+
+</beans>

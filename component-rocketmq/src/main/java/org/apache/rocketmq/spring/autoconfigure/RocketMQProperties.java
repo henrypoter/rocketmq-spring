@@ -40,6 +40,7 @@ public  class RocketMQProperties {
     /**
      * Enum type for accesChannel, values: LOCAL, CLOUD
      */
+    @Value("${rocketmq.access-channel}")
     private String accessChannel;
 
 
@@ -109,6 +110,7 @@ public  class RocketMQProperties {
          * <p> Maximum number of retry to perform internally before claiming sending failure in asynchronous mode. </p>
          * This may potentially cause message duplication which is up to application developers to resolve.
          */
+
         private int retryTimesWhenSendAsyncFailed = 2;
 
         /**
