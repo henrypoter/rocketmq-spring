@@ -17,21 +17,19 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
-import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import com.fasterxml.jackson.databind.ObjectMapper;
+//import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @see RocketMQMessageConverter
- */
 @Configuration
-@ConditionalOnMissingBean(RocketMQMessageConverter.class)
-class MessageConverterConfiguration {
+//@ConditionalOnMissingBean(ObjectMapper.class)
+@Deprecated
+class JacksonFallbackConfiguration {
 
     @Bean
-    public RocketMQMessageConverter createRocketMQMessageConverter() {
-        return new RocketMQMessageConverter();
+    public ObjectMapper rocketMQMessageObjectMapper() {
+        return new ObjectMapper();
     }
 
 }

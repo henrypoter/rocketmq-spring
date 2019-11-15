@@ -18,18 +18,23 @@
 package org.apache.rocketmq.spring.autoconfigure;
 
 import org.apache.rocketmq.common.MixAll;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+//import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("WeakerAccess")
-@ConfigurationProperties(prefix = "rocketmq")
-public class RocketMQProperties {
+//@ConfigurationProperties(prefix = "rocketmq")
+@Configuration
+public  class RocketMQProperties {
 
     /**
      * The name server for rocketMQ, formats: `host:port;host:port`.
      */
+    @Value("${rocketmq.name-server}")
     private String nameServer;
 
     /**
@@ -37,6 +42,8 @@ public class RocketMQProperties {
      */
     private String accessChannel;
 
+
+    @Autowired
     private Producer producer;
 
     /**
@@ -47,7 +54,7 @@ public class RocketMQProperties {
      * <p>
      * the listener is enabled by default.
      */
-    private Consumer consumer = new Consumer();
+    private  Consumer consumer = new Consumer();
 
     public String getNameServer() {
         return nameServer;
@@ -73,11 +80,13 @@ public class RocketMQProperties {
         this.producer = producer;
     }
 
+    @Configuration
     public static class Producer {
 
         /**
          * Group name of producer.
          */
+        @Value("${rocketmq.producer.group}")
         private String group;
 
         /**
@@ -229,7 +238,8 @@ public class RocketMQProperties {
         this.consumer = consumer;
     }
 
-    public static final class Consumer {
+    @Configuration
+    public static  class Consumer {
         /**
          * listener configuration container
          * the pattern is like this:
